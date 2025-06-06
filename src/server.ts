@@ -2,6 +2,7 @@ import Fastify from 'fastify'
 import cors from '@fastify/cors'
 import { clienteRoutes } from './routes/clientes'
 import { ativosRoutes } from './routes/ativos'
+import { alocacoesRoutes } from './routes/alocacoes'
 
 export const app = Fastify()
 
@@ -19,4 +20,5 @@ app.register(cors, {
 
 // Registre suas rotas após o CORS
 app.register(clienteRoutes)
+app.register(ativosRoutes)
 app.register(ativosRoutes)
