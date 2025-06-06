@@ -24,7 +24,7 @@ Este documento descreve a camada de backend do sistema, responsável pela API, l
 * Copie .env.example para um novo arquivo .env e configure sua string de conexão com o banco de dados:
 * Edite o arquivo .env
 * npx prisma migrate dev
-* Parar tudo: docker-compose down
+* Instale o Docker em sua máquina e o deixe executando em segundo plano, após isso rode docker-compose up -d --build (a depender da configuração do banco de dados, será necessário passar as informações de acesso!)
 * Ver logs da aplicação: docker-compose logs -f app
 * Ver logs do banco: docker-compose logs -f db
 * npm run dev
