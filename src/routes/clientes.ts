@@ -38,11 +38,21 @@ export async function clienteRoutes(app: FastifyInstance) {
     }
   });
 
-  app.get('/clients/:id', async (request, reply) => {
+  app.get('/clients/:id', async (request) => {
     const { id } = z.object({ id: z.coerce.number() }).parse(request.params)
-    const cliente = await prisma.cliente.findUnique({ where: { id } })
-    if (!cliente) return reply.code(404).send({ msg: 'Cliente não encontrado' })
-    return cliente
+    const client = await prisma.cliente.findUnique({
+      where: { id },
+      include: { alocacoes: { include: { ativo: true } } }
+    })
+    if (!client) throw new Error('Client not found')
+    const totalAllocated = client.alocacoes.reduce((sum, allocation) => {
+      return sum + (allocation.quantidade * allocation.ativo.valor)
+    }, 0)
+    return {
+      ...client,
+      totalAllocated,
+      createdAt: client.createdAt.toISOString()
+    }
   })
 
   app.put('/clients/:id', async (request, reply) => {
